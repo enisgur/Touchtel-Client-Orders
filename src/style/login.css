@@ -1,0 +1,43 @@
+/* ////////////////////////////////////////////////////////////////////////////// */
+/* REGISTER */
+/* ////////////////////////////////////////////////////////////////////////////// */
+
+.registerPage {
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    height: calc(100vh - 45px);
+}
+
+.registerPage .formsHeader {
+    margin-bottom: 55px;
+    padding-bottom: 10px;
+    padding-left: 50px;
+    border-bottom: #333333 solid 1px;
+}
+
+.registerPage .formsHeader .icons {}
+
+.registerPage .formsHeader .icons i {
+    float: left;
+}
+
+.registerPage .formsHeader h1 {}
+
+.form {
+    /* width: 90%; */
+}
+
+.form .form-group {
+    /* width: 90%; */
+    display: grid;
+    margin-bottom: 1em;
+}
+
+.form .form-group input {
+    width: 500px;
+    padding: 7px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 1.1em;
+    font-weight: 500;
+}

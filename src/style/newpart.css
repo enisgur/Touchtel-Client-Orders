@@ -1,0 +1,138 @@
+.myForm form .hide {
+    display: none;
+}
+
+.myForm {
+    width: 100%;
+    height: auto;
+    padding: 50px 0;
+}
+
+.myForm form {
+    position: relative;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 20%);
+    /* flex-direction: row; */
+    /* align-items: center; */
+    justify-content: space-evenly;
+}
+
+.myForm form .formSection {
+    /* background-color: red; */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.myForm form .formSection .sectionTitle {
+    font-size: 1.5rem;
+
+    padding-bottom: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.myForm form .formSection .form-group {
+    width: 100%;
+    padding-bottom: 20px;
+}
+
+.myForm form .formSection .checkbox {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+/* .myForm form .formSection .checkbox .form-checkbox {}
+
+.myForm form .formSection .checkbox .form-checkbox .form-checkbox-label {} */
+
+.myForm form .formSection .form-group .form-checkbox[type="checkbox"] {
+    width: 40%;
+    height: 20px;
+}
+
+
+.myForm form .formSection .form-group label {
+    display: block;
+    width: 100%;
+    margin-bottom: 6px;
+}
+
+
+
+.myForm form .formSection .form-group input {
+    width: 100%;
+    padding: 6px;
+}
+
+.myForm form .formSection .form-group input[type="date"] {
+    font-size: 12px;
+}
+
+.myForm .buttons {
+    width: 85%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    /* justify-content: space-evenly; */
+}
+
+.myForm .buttons button[type="submit"] {
+    background-color: inherit;
+    border: 1px solid #241e1e;
+    border-radius: 20px;
+    width: 100px;
+    height: 40px;
+    font-size: 18px;
+}
+
+.myForm .buttons button[type="submit"]:hover {
+    color: #645454;
+    background-color: #e4e4e4;
+}
+
+.myForm .buttons button[type="submit"]:active {
+    background-color: #c7c7c7;
+    width: 95px;
+}
+
+
+
+@media screen and (max-width: 1020px) {
+    .myForm form {
+        grid-template-columns: repeat(2, 30%);
+    }
+
+    .myForm .buttons {
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .myForm form {
+        grid-template-columns: repeat(2, 40%);
+    }
+
+    .myForm .buttons {
+        width: 80%;
+    }
+
+}
+
+@media screen and (max-width: 400px) {
+    .myForm form {
+        grid-template-columns: 70%;
+    }
+
+    .myForm .buttons {
+        width: 70%;
+    }
+}
