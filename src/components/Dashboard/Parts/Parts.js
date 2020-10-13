@@ -121,6 +121,7 @@ const Parts = ({ isAuth, user, parts, postPart, getParts, loadUser }) => {
         p={clickedTable ? clickedTable : null}
         modalState={isDetailModal}
         onClose={() => setIsDetailModal(false)}
+        onModalSubmit={(formdata) => onModalSubmit(formdata)}
       />
       <div className="title">
         <h2>Parts</h2>

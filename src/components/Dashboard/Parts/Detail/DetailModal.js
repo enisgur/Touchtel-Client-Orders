@@ -9,8 +9,8 @@ const formStyle = {
   textAlign: "center",
 };
 
-const DetailModal = ({ modalState, onClose, p }) => {
-  // console.log(p && p[0]._id);
+const DetailModal = ({ modalState, onClose, p, onModalSubmit }) => {
+  // console.log(p && p[0].user._id);
 
   const [formdata, setFormdata] = useState({
     user: "",
@@ -64,7 +64,7 @@ const DetailModal = ({ modalState, onClose, p }) => {
       return {
         ...f,
         id: p && p[0]._id ? p[0]._id : "",
-        user: "",
+        user: p && p[0].user._id ? p[0].user._id : "",
         date: p && p[0].date ? p[0].date.split("T")[0] : "",
         edate:
           p && p[0].shipping.edate ? p[0].shipping.edate.split("T")[0] : "",
@@ -110,6 +110,7 @@ const DetailModal = ({ modalState, onClose, p }) => {
       phone: "",
       email: "",
       status: null,
+      edit: false,
     });
   };
 
@@ -141,8 +142,9 @@ const DetailModal = ({ modalState, onClose, p }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    // await onModalSubmit(formdata);
+    await onModalSubmit(formdata);
     // clearForm();
+    // closeModal();
   };
 
   const closeModal = () => {

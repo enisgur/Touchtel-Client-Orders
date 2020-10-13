@@ -1,9 +1,12 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 // import PropTypes
 
 import usePagination from "../Pagination/usePagination";
 
 const Datatable = ({ data, itemsPerPage, startFrom, onTableId }) => {
+  const [dateAsc, setDateAsc] = useState(false);
+  const [estimateAsc, setEstimateAsc] = useState(false);
+
   const {
     slicedData,
     pagination,
@@ -18,7 +21,16 @@ const Datatable = ({ data, itemsPerPage, startFrom, onTableId }) => {
   useEffect(() => {
     const init = async () => {
       if (data) {
-        // console.log("initiallll ll l l", data);
+        // by default set date asc
+        data.sort(function (a, b) {
+          let partsA = a.date.split("-");
+          let partsB = b.date.split("-");
+          return (
+            new Date(partsB[0], partsB[1] - 1, partsB[2]) -
+            new Date(partsA[0], partsA[1] - 1, partsA[2])
+          );
+        });
+        // end sort()
         await getInitialData();
       }
     };
@@ -31,6 +43,62 @@ const Datatable = ({ data, itemsPerPage, startFrom, onTableId }) => {
     onTableId(e.target.id);
   };
 
+  const sortDate = (partsA, partsB, isASC) => {
+    if (isASC) {
+      return (
+        new Date(partsA[0], partsA[1] - 1, partsA[2]) -
+        new Date(partsB[0], partsB[1] - 1, partsB[2])
+      );
+    } else {
+      return (
+        new Date(partsB[0], partsB[1] - 1, partsB[2]) -
+        new Date(partsA[0], partsA[1] - 1, partsA[2])
+      );
+    }
+  };
+
+  const onHeadingClick = (e) => {
+    // sortTable(e.target.id);
+    const head = e.target.id;
+
+    data.sort(function (a, b) {
+      // Turn your strings into dates, and then subtract them
+      // to get a value that is either negative, positive, or zero.
+
+      let partsA;
+      let partsB;
+
+      if (head === "date") {
+        partsA = a.date.split("-");
+        partsB = b.date.split("-");
+
+        return sortDate(partsA, partsB, dateAsc);
+      }
+      if (head === "estimate") {
+        partsA = a.estimate.split("-");
+        partsB = b.estimate.split("-");
+
+        return sortDate(partsA, partsB, estimateAsc);
+      }
+    });
+
+    if (head === "estimate") {
+      if (estimateAsc) {
+        setEstimateAsc(!estimateAsc);
+      } else {
+        setEstimateAsc(!estimateAsc);
+      }
+    }
+    if (head === "date") {
+      if (dateAsc) {
+        setDateAsc(!dateAsc);
+      } else {
+        setDateAsc(!dateAsc);
+      }
+    }
+    getInitialData();
+  };
+
   return (
     <Fragment>
       <table cellPadding={0} cellSpacing={0}>
@@ -39,7 +107,15 @@ const Datatable = ({ data, itemsPerPage, startFrom, onTableId }) => {
             {data[0] &&
               // columns.map((heading, index) => <th key={index}>{heading}</th>)}
               columns.map((heading, index) =>
-                heading === "id" ? null : <th key={index}>{heading}</th>
+                heading === "id" ? null : (
+                  <th
+                    onClick={(e) => onHeadingClick(e)}
+                    key={index}
+                    id={heading}
+                  >
+                    {heading}
+                  </th>
+                )
               )}
           </tr>
         </thead>
