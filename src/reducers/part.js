@@ -11,6 +11,7 @@ export default function (state = initialState, action) {
 
   switch (type) {
     case part.GET_ALL_PARTS:
+    case part.GET_PARTS_MONTH:
       return {
         ...state,
         loading: false,

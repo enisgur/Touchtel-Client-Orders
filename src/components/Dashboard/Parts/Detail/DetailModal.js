@@ -85,6 +85,11 @@ const DetailModal = ({ modalState, onClose, p, onModalSubmit }) => {
         status: p && p[0].status ? p[0].status : null,
       };
     });
+
+    // return () => {
+    //   // Clean up the subscription
+    //   clearForm();
+    // };
   }, [p]);
 
   //   console.log(formdata);

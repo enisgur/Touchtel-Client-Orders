@@ -80,6 +80,8 @@ const Datatable = ({ data, itemsPerPage, startFrom, onTableId }) => {
 
         return sortDate(partsA, partsB, estimateAsc);
       }
+
+      return null;
     });
 
     if (head === "estimate") {
@@ -113,10 +115,11 @@ const Datatable = ({ data, itemsPerPage, startFrom, onTableId }) => {
                     key={index}
                     id={heading}
                   >
-                    {heading}
+                    {heading.charAt(0).toUpperCase() + heading.slice(1)}
                   </th>
                 )
               )}
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>

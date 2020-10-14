@@ -22,6 +22,22 @@ export const getParts = () => async (dispatch) => {
   }
 };
 
+// Get All Parts
+export const getPartsbyMonth = (y, m) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/v1/parts/month/${y}/${m}`);
+
+    dispatch({
+      type: part.GET_PARTS_MONTH,
+      payload: res.data,
+    });
+
+    return res.data;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 // Post Part
 export const postPart = (formdata) => async (dispatch) => {
   if (localStorage.token) {
