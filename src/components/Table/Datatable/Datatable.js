@@ -19,7 +19,7 @@ const Datatable = ({ data, itemsPerPage, startFrom, onTableId }) => {
   const columns = data[0] && Object.keys(data[0]);
 
   useEffect(() => {
-    const init = async () => {
+    const init = () => {
       if (data) {
         // by default set date asc
         data.sort(function (a, b) {
@@ -31,16 +31,20 @@ const Datatable = ({ data, itemsPerPage, startFrom, onTableId }) => {
           );
         });
         // end sort()
-        await getInitialData();
+        getInitialData();
       }
     };
-    init();
+    if (data[0]) {
+      init();
+    }
   }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onDetail = (e) => {
     e.preventDefault();
     // console.log(e.target.id);
-    onTableId(e.target.id);
+    if (e.target.id) {
+      onTableId(e.target.id);
+    }
   };
 
   const sortDate = (partsA, partsB, isASC) => {
@@ -123,25 +127,29 @@ const Datatable = ({ data, itemsPerPage, startFrom, onTableId }) => {
           </tr>
         </thead>
         <tbody>
-          {slicedData[0] && data[0]
-            ? slicedData.map((row, rI) => (
-                <tr key={rI}>
-                  {columns.map((column, cI) =>
-                    // <td key={cI}>{row[column]}</td>
-                    cI === 0 ? null : <td key={cI}>{row[column]}</td>
-                  )}
-                  <td>
-                    <button
-                      className="btn-details"
-                      onClick={(e) => onDetail(e)}
-                      id={row.id}
-                    >
-                      details
-                    </button>
-                  </td>
-                </tr>
-              ))
-            : null}
+          {slicedData[0] && data[0] ? (
+            slicedData.map((row, rI) => (
+              <tr key={rI}>
+                {columns.map((column, cI) =>
+                  // <td key={cI}>{row[column]}</td>
+                  cI === 0 ? null : <td key={cI}>{row[column]}</td>
+                )}
+                <td>
+                  <button
+                    className="btn-details"
+                    onClick={(e) => onDetail(e)}
+                    id={row.id}
+                  >
+                    details
+                  </button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td>NO DATA</td>
+            </tr>
+          )}
         </tbody>
       </table>
       <div className="pagination">

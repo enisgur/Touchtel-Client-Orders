@@ -12,20 +12,21 @@ const Table = ({ d, callBackTable }) => {
   const [data, setData] = useState([]);
   const [q, setQ] = useState("");
 
-  useEffect(() => {
-    // fetch("https://jsonplaceholder.typicode.com/comments")
-    //   .then((response) => response.json())
-    //   .then((json) => setData(json));
+  const [isFiltered, setIsFiltered] = useState(false);
+  const [filteredData, setFilteredData] = useState([]);
 
+  // const [filteredData, setFilteredData] = useState([]);
+  // const [isFiltered, setIsFiltered] = useState(false);
+
+  useEffect(() => {
     if (d) {
       setData(d);
+      setFilteredData(d);
     }
-
-    // setData(d);
-    // console.log(d);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   //   console.log("dddd:", d);
   // const search1 = (rows) => {
   //   //   SEARCH ONLY SPECIFIED COLUMNS
@@ -36,22 +37,35 @@ const Table = ({ d, callBackTable }) => {
   //   );
   // };
 
-  const search = (rows) => {
-    //   OR YOU CAN SPECIFY EACH COLUMNS IN ARRAY
-    // const columns = ["email", "name"];
-
-    //   SEARCH ALL COLUMNS THAT COMES FROM JSON DATA
-    const columns = rows[0] && Object.keys(rows[0]);
-    return rows.filter((row) =>
-      columns.some(
-        (column) =>
-          row[column].toString().toLowerCase().indexOf(q.toLowerCase()) > -1
-      )
-    );
-  };
+  useEffect(() => {
+    const search = (rows) => {
+      //   OR YOU CAN SPECIFY EACH COLUMNS IN ARRAY
+      // const columns = ["email", "name"];
+      if (rows) {
+        //   SEARCH ALL COLUMNS THAT COMES FROM JSON DATA
+        const columns = rows[0] && Object.keys(rows[0]);
+        return rows.filter((row) =>
+          columns.some(
+            (column) =>
+              row[column].toString().toLowerCase().indexOf(q.toLowerCase()) > -1
+          )
+        );
+      }
+    };
+    if (data[0]) {
+      setFilteredData(search(data));
+      // setData(data)
+    }
+  }, [q, data]);
 
   const onTableId = (tableID) => {
-    callBackTable(tableID);
+    tableID && callBackTable(tableID);
+  };
+
+  const handleQuery = (e) => {
+    e.preventDefault();
+    setQ(e.target.value);
+    setIsFiltered(true);
   };
 
   return (
@@ -61,12 +75,12 @@ const Table = ({ d, callBackTable }) => {
           className="table-search-input"
           type="text"
           value={q}
-          onChange={(e) => setQ(e.target.value)}
+          onChange={(e) => handleQuery(e)}
           placeholder="Search..."
         />
       </div>
       <Datatable
-        data={search(data)}
+        data={isFiltered ? filteredData : data}
         itemsPerPage={10}
         onTableId={(tableID) => onTableId(tableID)}
       />

@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 const Sidebar = () => {
   return (
     <div className="sidebar">
-      <div className="logo">LOGO</div>
+      <div className="logo">
+        <Link to="/dashboard">TT-Orders</Link>
+      </div>
       <div className="side-links">
         <div className="panel-group">
           <div className="panel-title">PAGES</div>

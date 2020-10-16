@@ -40,8 +40,8 @@
     margin: 20px 0;
 }
 .parts-main .dates .selectes {
-    /* widt from .selectDates 110 * 2 to make some space add extra px */
-    width: 250px;
+    /* widt from .selectDates 110 * 3 to make some space add extra px */
+    width: 360px;
     display: flex;
     justify-content: space-around;
 }

@@ -29,6 +29,10 @@
     align-items: center;
     transform: translateX(-20%);
 }
+.template .sidebar .logo a {
+    color: #FEFEFE;
+    text-decoration: none;
+}
 
 .template .sidebar .side-links {
     display: flex;
