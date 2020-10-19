@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ReactDom from "react-dom";
+import moment from "moment";
 
 import "../../../../style/newpart.css";
 import "../../../../style/modal.css";
@@ -9,12 +10,22 @@ const formStyle = {
   textAlign: "center",
 };
 
-const NewPart = ({ modalState, onClose, onModalSubmit, user }) => {
+const NewPart = ({
+  modalState,
+  onClose,
+  onModalSubmit,
+  user,
+  suppliers,
+  carriers,
+}) => {
   const userID = user && user._id;
+
+  const [selectedSupplier, setSelectedSupplier] = useState();
+  const [selectedCarrier, setSelectedCarrier] = useState();
 
   const [formdata, setFormdata] = useState({
     user: "",
-    date: "",
+    date: moment().format("yyyy-MM-D"),
     edate: "",
     tracking: "",
     carrier: "",
@@ -37,7 +48,7 @@ const NewPart = ({ modalState, onClose, onModalSubmit, user }) => {
     edate,
     tracking,
     carrier,
-    supplier,
+    // supplier,
     part,
     device,
     model,
@@ -52,13 +63,41 @@ const NewPart = ({ modalState, onClose, onModalSubmit, user }) => {
   } = formdata;
 
   useEffect(() => {
+    // SET DEFAULT suppliers value
+    if (suppliers[0] && suppliers[0]._id) {
+      setSelectedSupplier(suppliers[0]._id);
+      setFormdata((f) => {
+        return {
+          ...f,
+          supplier: suppliers[0]._id,
+        };
+      });
+    }
+
+    if (carriers[0] && carriers[0]._id) {
+      setSelectedCarrier(carriers[0]._id);
+      setFormdata((f) => {
+        return {
+          ...f,
+          carrier: carriers[0]._id,
+        };
+      });
+    }
+
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
     // Set UserID when we gor the ID
     // setFormdata({
     //   ...formdata,
     //   user: userID,
     // });
     setFormdata((f) => {
-      return { ...f, user: userID };
+      return {
+        ...f,
+        user: userID,
+      };
     });
   }, [userID]);
 
@@ -81,6 +120,7 @@ const NewPart = ({ modalState, onClose, onModalSubmit, user }) => {
       name: "",
       phone: "",
       email: "",
+      note: "",
     });
   };
 
@@ -102,6 +142,12 @@ const NewPart = ({ modalState, onClose, onModalSubmit, user }) => {
             email: "",
           });
     }
+    if (e.target.name === "supplier") {
+      setSelectedSupplier(e.target.value);
+    }
+    if (e.target.name === "carrier") {
+      setSelectedCarrier(e.target.value);
+    }
     setFormdata({ ...formdata, [e.target.name]: e.target.value });
 
     // console.log(formdata);
@@ -112,6 +158,7 @@ const NewPart = ({ modalState, onClose, onModalSubmit, user }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    // console.log(formdata);
     await onModalSubmit(formdata);
     clearForm();
   };
@@ -167,26 +214,55 @@ const NewPart = ({ modalState, onClose, onModalSubmit, user }) => {
               </div>
               <div className="form-group">
                 <label htmlFor="carrier">Carrier</label>
-                <input
+                {/* <input
                   type="text"
                   name="carrier"
                   id="carrier"
                   onChange={(e) => onChane(e)}
                   value={carrier}
-                />
+                /> */}
+
+                <select
+                  name="carrier"
+                  id="carrier"
+                  onChange={(e) => onChane(e)}
+                  value={selectedCarrier}
+                >
+                  {carriers.map((carrier) => {
+                    return (
+                      <option key={carrier._id} value={carrier._id}>
+                        {carrier.company}
+                      </option>
+                    );
+                  })}
+                </select>
               </div>
             </div>
             <div className="formSection">
               <div className="sectionTitle">Part</div>
               <div className="form-group">
                 <label htmlFor="supplier">Supplier</label>
-                <input
+                {/* <input
                   type="text"
                   name="supplier"
                   id="supplier"
                   onChange={(e) => onChane(e)}
                   value={supplier}
-                />
+                /> */}
+                <select
+                  name="supplier"
+                  id="supplier"
+                  onChange={(e) => onChane(e)}
+                  value={selectedSupplier}
+                >
+                  {suppliers.map((supplier) => {
+                    return (
+                      <option key={supplier._id} value={supplier._id}>
+                        {supplier.company}
+                      </option>
+                    );
+                  })}
+                </select>
               </div>
               <div className="form-group">
                 <label htmlFor="part">Part</label>
@@ -316,6 +392,7 @@ const NewPart = ({ modalState, onClose, onModalSubmit, user }) => {
                 />
               </div>
             </div>
+
             <button
               className="hide"
               type="submit"

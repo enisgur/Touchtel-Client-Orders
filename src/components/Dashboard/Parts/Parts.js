@@ -3,16 +3,24 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+
+// Actions
 import { postPart, getPartsbyMonth } from "../../../actions/part";
+import { getSuppliers } from "../../../actions/supplier";
+import { getCarriers } from "../../../actions/carrier";
 // import { loadUser } from "../../../actions/auth";
 
+// css
 import "../../../style/part.css";
 
+// Components
 import NewPart from "./NewPart/NewPart";
 import DetailModal from "./Detail/DetailModal";
 import Table from "../../Table/Table";
 
+// Utils Functions
 import { searchFunc, getPartsbyDate } from "./../../utils/tableFuncs";
+// import carriers from "../../../reducers/carriers";
 
 const Parts = ({
   isAuth,
@@ -21,6 +29,10 @@ const Parts = ({
   postPart,
   // getParts,
   getPartsbyMonth,
+  getSuppliers,
+  suppliers,
+  getCarriers,
+  carriers,
   // loadUser,
 }) => {
   const history = useHistory();
@@ -77,7 +89,10 @@ const Parts = ({
       setMonth(new Date().getMonth() + 1);
     }
 
+    getCarriers();
+    getSuppliers();
     setDate();
+    // eslint-disable-next-line
   }, []);
 
   // GETPARTSBYDATE WAS HERE <-----------------------
@@ -174,6 +189,8 @@ const Parts = ({
       {isModal && (
         <NewPart
           user={user}
+          suppliers={suppliers && suppliers.suppliers}
+          carriers={carriers && carriers.carriers}
           modalState={isModal}
           onClose={() => setIsModal(false)}
           onModalSubmit={(formdata) => onModalSubmit(formdata)}
@@ -183,6 +200,8 @@ const Parts = ({
       {isDetailModal && (
         <DetailModal
           p={clickedTable ? clickedTable : null}
+          suppliers={suppliers && suppliers.suppliers}
+          carriers={carriers && carriers.carriers}
           modalState={isDetailModal}
           onClose={() => setIsDetailModal(false)}
           onModalSubmit={(formdata) => onModalSubmit(formdata)}
@@ -275,16 +294,22 @@ Parts.propTypes = {
   user: PropTypes.object,
   parts: PropTypes.array,
   isAuth: PropTypes.bool,
+  getSuppliers: PropTypes.func.isRequired,
+  getCarriers: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
   parts: state.part.parts,
   isAuth: state.auth.isAuthenticated,
+  suppliers: state.suppliers,
+  carriers: state.carriers,
 });
 
 export default connect(mapStateToProps, {
   postPart,
+  getSuppliers,
+  getCarriers,
   // getParts,
   getPartsbyMonth,
   // loadUser,

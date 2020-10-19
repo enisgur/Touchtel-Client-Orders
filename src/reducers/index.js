@@ -2,16 +2,13 @@ import { combineReducers } from "redux";
 import alert from "./alert";
 import auth from "./auth";
 import part from "./part";
-
-// import profile from './profile';
-// import products from './products';
-// import fix from './fix';
+import suppliers from "./suppliers";
+import carriers from "./carriers";
 
 export default combineReducers({
   alert,
   auth,
   part,
-  //   profile,
-  //   products,
-  //   fix
+  suppliers,
+  carriers,
 });

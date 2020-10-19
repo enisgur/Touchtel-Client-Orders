@@ -29,3 +29,11 @@ export const part = {
   GET_ALL_PARTS: "GET_ALL_PARTS",
   GET_PARTS_MONTH: "GET_PARTS_MONTH",
 };
+
+export const supplier = {
+  GET_ALL_SUPPLIERS: "GET_ALL_SUPPLIERS",
+};
+
+export const shipping = {
+  GET_ALL_CARRIERS: "GET_ALL_CARRIERS",
+};

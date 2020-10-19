@@ -6,8 +6,20 @@ import "../../../../style/modal.css";
 
 import { modalForm } from "./modalForm";
 
-const DetailModal = ({ modalState, onClose, p, onModalSubmit }) => {
+const DetailModal = ({
+  modalState,
+  onClose,
+  p,
+  onModalSubmit,
+  suppliers,
+  carriers,
+}) => {
   // console.log(p && p[0].user._id);
+
+  // console.log("from Detail Modal :", p);
+
+  const [selectedSupplier, setSelectedSupplier] = useState();
+  const [selectedCarrier, setSelectedCarrier] = useState();
 
   const [formdata, setFormdata] = useState({
     user: "",
@@ -38,6 +50,15 @@ const DetailModal = ({ modalState, onClose, p, onModalSubmit }) => {
 
   useEffect(() => {
     //   if ()
+
+    setSelectedSupplier(
+      p && p[0].detail.supplier._id ? p[0].detail.supplier._id : ""
+    );
+
+    setSelectedCarrier(
+      p && p[0].shipping.carrier._id ? p[0].shipping.carrier._id : ""
+    );
+
     setFormdata((f) => {
       return {
         ...f,
@@ -47,8 +68,9 @@ const DetailModal = ({ modalState, onClose, p, onModalSubmit }) => {
         edate:
           p && p[0].shipping.edate ? p[0].shipping.edate.split("T")[0] : "",
         tracking: p && p[0].shipping.tracking ? p[0].shipping.tracking : "",
-        carrier: p && p[0].shipping.carrier ? p[0].shipping.carrier : "",
-        supplier: p && p[0].detail.supplier ? p[0].detail.supplier : "",
+        carrier:
+          p && p[0].shipping.carrier._id ? p[0].shipping.carrier._id : "",
+        supplier: p && p[0].detail.supplier._id ? p[0].detail.supplier._id : "",
         part: p && p[0].detail.part ? p[0].detail.part : "",
         device: p && p[0].detail.device ? p[0].detail.device : "",
         model: p && p[0].detail.model ? p[0].detail.model : "",
@@ -115,6 +137,13 @@ const DetailModal = ({ modalState, onClose, p, onModalSubmit }) => {
             email: "",
           });
     }
+    if (e.target.name === "supplier") {
+      setSelectedSupplier(e.target.value);
+    }
+    if (e.target.name === "carrier") {
+      setSelectedCarrier(e.target.value);
+    }
+
     setFormdata({ ...formdata, [e.target.name]: e.target.value });
 
     // console.log(formdata);
@@ -171,6 +200,10 @@ const DetailModal = ({ modalState, onClose, p, onModalSubmit }) => {
           onSubmit,
           toggleEdit,
           handleStatus,
+          selectedSupplier,
+          suppliers,
+          carriers,
+          selectedCarrier,
         })}
         {/* contentDiv */}
       </div>

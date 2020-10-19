@@ -22,9 +22,16 @@ export const searchFunc = async (st, parts, states) => {
       await part.map((p) => {
         let newObj = {
           id: p._id ? p._id : "",
+          status: p.status
+            ? p.status === "0"
+              ? "Ordered"
+              : p.status === "1"
+              ? "Shipped"
+              : p.status === "2" && "Done"
+            : "",
           date: p.date ? p.date.split("T")[0] : "",
           estimate: p.shipping.edate ? p.shipping.edate.split("T")[0] : "",
-          from: p.detail.supplier ? p.detail.supplier : "",
+          from: p.detail.supplier.company ? p.detail.supplier.company : "",
           device: p.detail.device ? p.detail.device : "",
           model: p.detail.model ? p.detail.model : "",
           part: p.detail.part ? p.detail.part : "",
@@ -74,9 +81,16 @@ export const getPartsbyDate = async (year, month, states, actions) => {
 
         let newObj = {
           id: p._id,
+          status: p.status
+            ? p.status === "0"
+              ? "Ordered"
+              : p.status === "1"
+              ? "Shipped"
+              : p.status === "2" && "Done"
+            : "",
           date: p.date ? p.date.split("T")[0] : "",
           estimate: p.shipping.edate ? p.shipping.edate.split("T")[0] : "",
-          from: p.detail.supplier ? p.detail.supplier : "",
+          from: p.detail.supplier.company ? p.detail.supplier.company : "",
           device: p.detail.device ? p.detail.device : "",
           model: p.detail.model ? p.detail.model : "",
           part: p.detail.part ? p.detail.part : "",

@@ -43,3 +43,18 @@ table th {
     font-size: 16px;
 
 }
+
+
+/* TABLE STATUS */
+/* 
+table tbody .done {
+    background-color: yellow;
+}
+
+table tbody .shipped {
+    background-color: #9dff84;
+}
+
+table tbody .ordered {
+    background-color: tomato;
+} */

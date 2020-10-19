@@ -129,7 +129,10 @@ const Datatable = ({ data, itemsPerPage, startFrom, onTableId }) => {
         <tbody>
           {slicedData[0] && data[0] ? (
             slicedData.map((row, rI) => (
-              <tr key={rI}>
+              <tr
+                className={row.status && row.status.toString().toLowerCase()}
+                key={rI}
+              >
                 {columns.map((column, cI) =>
                   // <td key={cI}>{row[column]}</td>
                   cI === 0 ? null : <td key={cI}>{row[column]}</td>

@@ -67,14 +67,20 @@
 
 
 
-.myForm form .formSection .form-group input {
+.myForm form .formSection .form-group input,
+.myForm form .formSection .form-group select {
     width: 100%;
     padding: 6px;
+}
+
+.myForm form .formSection .form-group select option {
+    font-size: 15px;
 }
 
 .myForm form .formSection .form-group input[type="date"] {
     font-size: 12px;
 }
+
 
 .myForm .buttons {
     width: 85%;

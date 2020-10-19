@@ -11,7 +11,7 @@ export const modalForm = (formData, handles) => {
     edate,
     tracking,
     carrier,
-    supplier,
+    // supplier,
     part,
     device,
     model,
@@ -27,7 +27,17 @@ export const modalForm = (formData, handles) => {
     edit,
   } = formData;
 
-  const { onChane, handleFocus, onSubmit, toggleEdit, handleStatus } = handles;
+  const {
+    onChane,
+    handleFocus,
+    onSubmit,
+    toggleEdit,
+    handleStatus,
+    selectedSupplier,
+    suppliers,
+    carriers,
+    selectedCarrier,
+  } = handles;
 
   return (
     <Fragment>
@@ -109,28 +119,59 @@ export const modalForm = (formData, handles) => {
             </div>
             <div className="form-group">
               <label htmlFor="carrier">Carrier</label>
-              <input
+              {/* <input
                 type="text"
                 name="carrier"
                 id="carrier"
                 onChange={(e) => onChane(e)}
                 value={carrier}
                 disabled={!edit}
-              />
+              /> */}
+
+              <select
+                name="carrier"
+                id="carrier"
+                onChange={(e) => onChane(e)}
+                value={selectedCarrier}
+                disabled={!edit}
+              >
+                {carriers.map((carrier) => {
+                  return (
+                    <option key={carrier._id} value={carrier._id}>
+                      {carrier.company}
+                    </option>
+                  );
+                })}
+              </select>
             </div>
           </div>
           <div className="formSection">
             <div className="sectionTitle">Part</div>
             <div className="form-group">
               <label htmlFor="supplier">Supplier</label>
-              <input
+              {/* <input
                 type="text"
                 name="supplier"
                 id="supplier"
                 onChange={(e) => onChane(e)}
                 value={supplier}
                 disabled={!edit}
-              />
+              /> */}
+              <select
+                name="supplier"
+                id="supplier"
+                onChange={(e) => onChane(e)}
+                value={selectedSupplier}
+                disabled={!edit}
+              >
+                {suppliers.map((supplier) => {
+                  return (
+                    <option key={supplier._id} value={supplier._id}>
+                      {supplier.company}
+                    </option>
+                  );
+                })}
+              </select>
             </div>
             <div className="form-group">
               <label htmlFor="part">Part</label>
