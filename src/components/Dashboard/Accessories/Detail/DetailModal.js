@@ -15,6 +15,7 @@ const DetailModal = ({
   suppliers,
   carriers,
   devices,
+  types,
 }) => {
   // console.log(p && p[0].user._id);
 
@@ -23,6 +24,7 @@ const DetailModal = ({
   const [selectedSupplier, setSelectedSupplier] = useState();
   const [selectedCarrier, setSelectedCarrier] = useState();
   const [selectedDevice, setSelectedDevice] = useState();
+  const [selectedType, setSelectedType] = useState();
 
   const [formdata, setFormdata] = useState({
     user: "",
@@ -31,7 +33,8 @@ const DetailModal = ({
     tracking: "",
     carrier: "",
     supplier: "",
-    part: "",
+    type: "",
+    accessory: "",
     device: "",
     model: "",
     quantity: "0",
@@ -67,6 +70,8 @@ const DetailModal = ({
       p && p[0].detail.device._id ? p[0].detail.device._id : ""
     );
 
+    setSelectedType(p && p[0].detail.type._id ? p[0].detail.type._id : "");
+
     setFormdata((f) => {
       return {
         ...f,
@@ -79,7 +84,8 @@ const DetailModal = ({
         carrier:
           p && p[0].shipping.carrier._id ? p[0].shipping.carrier._id : "",
         supplier: p && p[0].detail.supplier._id ? p[0].detail.supplier._id : "",
-        part: p && p[0].detail.part ? p[0].detail.part : "",
+        type: p && p[0].detail.type._id ? p[0].detail.type._id : "",
+        accessory: p && p[0].detail.accessory ? p[0].detail.accessory : "",
         device: p && p[0].detail.device._id ? p[0].detail.device._id : "",
         model: p && p[0].detail.model ? p[0].detail.model : "",
         quantity: p && p[0].finance.quantity ? p[0].finance.quantity : "0",
@@ -113,7 +119,8 @@ const DetailModal = ({
       tracking: "",
       carrier: "",
       supplier: "",
-      part: "",
+      type: "",
+      accessory: "",
       device: "",
       model: "",
       quantity: "0",
@@ -229,6 +236,8 @@ const DetailModal = ({
           devices,
           selectedCarrier,
           selectedDevice,
+          selectedType,
+          types,
         })}
         {/* contentDiv */}
       </div>

@@ -16,7 +16,7 @@ const Sidebar = () => {
               <span>></span>
             </div>
             <div className="link-group">
-              <Link to="#!">Accesories</Link>
+              <Link to="/dashboard/accessories">Accesories</Link>
               <span>></span>
             </div>
           </div>

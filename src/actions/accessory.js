@@ -1,18 +1,18 @@
 import axios from "axios";
 // IMPORT ALERT HERE
-import { axiosURL, part } from "../actions/types";
+import { axiosURL, accessory } from "../actions/types";
 import setAuthToken from "../utils/setAuthToken";
 
 // SET AXIOS PROXY BASEURL
 axios.defaults.baseURL = axiosURL;
 
 // Get All Parts
-export const getParts = () => async (dispatch) => {
+export const getAccessories = () => async (dispatch) => {
   try {
-    const res = await axios.get("/api/v1/parts");
+    const res = await axios.get("/api/v1/accessory");
 
     dispatch({
-      type: part.GET_ALL_PARTS,
+      type: accessory.GET_ALL_ACCESSORIES,
       payload: res.data,
     });
 
@@ -23,12 +23,12 @@ export const getParts = () => async (dispatch) => {
 };
 
 // Get All Parts
-export const getPartsbyMonth = (y, m) => async (dispatch) => {
+export const getAccessoriesbyMonth = (y, m) => async (dispatch) => {
   try {
-    const res = await axios.get(`/api/v1/parts/month/${y}/${m}`);
+    const res = await axios.get(`/api/v1/accessory/month/${y}/${m}`);
 
     dispatch({
-      type: part.GET_PARTS_MONTH,
+      type: accessory.GET_ACCESSORIES_MONTH,
       payload: res.data,
     });
 
@@ -39,7 +39,7 @@ export const getPartsbyMonth = (y, m) => async (dispatch) => {
 };
 
 // Post Part
-export const postPart = (formdata) => async (dispatch) => {
+export const postAccessory = (formdata) => async (dispatch) => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
   }
@@ -53,10 +53,14 @@ export const postPart = (formdata) => async (dispatch) => {
   const body = JSON.stringify(formdata);
 
   try {
-    const res = await axios.post("/api/v1/parts/addproduct", body, config);
+    const res = await axios.post(
+      "/api/v1/accessory/addaccessory",
+      body,
+      config
+    );
 
     dispatch({
-      type: part.POST_PART_SUCCESS,
+      type: accessory.POST_ACCESSORY_SUCCESS,
       payload: res.data,
     });
   } catch (err) {
@@ -66,7 +70,7 @@ export const postPart = (formdata) => async (dispatch) => {
     //   }
 
     dispatch({
-      type: part.POST_PART_FAIL,
+      type: accessory.POST_ACCESSORY_FAIL,
     });
 
     // delete this bellow after set alert dispatches check auth.js Login User
@@ -75,7 +79,7 @@ export const postPart = (formdata) => async (dispatch) => {
 };
 
 // Delete Selected Part
-export const deletePart = (mId) => async (dispatch) => {
+export const deleteAccessory = (mId) => async (dispatch) => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
   }
@@ -87,14 +91,14 @@ export const deletePart = (mId) => async (dispatch) => {
   };
 
   try {
-    const res = await axios.delete(`/api/v1/parts/${mId}`, config);
+    const res = await axios.delete(`/api/v1/accessory/${mId}`, config);
     dispatch({
-      type: part.DELETE_PART_SUCCESS,
+      type: accessory.DELETE_ACCESSORY_SUCCESS,
       payload: res.data,
     });
   } catch (err) {
     dispatch({
-      type: part.DELETE_PART_FAIL,
+      type: accessory.DELETE_ACCESSORY_FAIL,
     });
     console.error(err);
   }

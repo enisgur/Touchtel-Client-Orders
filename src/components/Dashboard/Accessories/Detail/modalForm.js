@@ -14,7 +14,7 @@ export const modalForm = (formData, handles) => {
     tracking,
     // carrier,
     // supplier,
-    part,
+    accessory,
     // device,
     model,
     quantity,
@@ -44,6 +44,8 @@ export const modalForm = (formData, handles) => {
     devices,
     selectedCarrier,
     carriers,
+    selectedType,
+    types,
   } = handles;
 
   const selectCallback = (name, value) => {
@@ -145,9 +147,6 @@ export const modalForm = (formData, handles) => {
                 callback={(name, value) => selectCallback(name, value)}
               />
             </div>
-          </div>
-          <div className="formSection groupPart">
-            <div className="sectionTitle">Part</div>
             <div className="form-group">
               <label htmlFor="supplier">Supplier</label>
               <Select
@@ -159,15 +158,30 @@ export const modalForm = (formData, handles) => {
                 callback={(name, value) => selectCallback(name, value)}
               />
             </div>
+          </div>
+          <div className="formSection groupPart">
+            <div className="sectionTitle">Accessory</div>
+
             <div className="form-group">
-              <label htmlFor="part">Part</label>
+              <label htmlFor="accessory">Accessory</label>
               <input
                 type="text"
-                name="part"
-                id="part"
+                name="accessory"
+                id="accessory"
                 onChange={(e) => onChane(e)}
-                value={part}
+                value={accessory}
                 disabled={!edit}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="supplier">Type</label>
+              <Select
+                name="type"
+                datas={types && types}
+                selected={selectedType}
+                isDetail={true}
+                disabled={!edit}
+                callback={(name, value) => selectCallback(name, value)}
               />
             </div>
             <div className="form-group">

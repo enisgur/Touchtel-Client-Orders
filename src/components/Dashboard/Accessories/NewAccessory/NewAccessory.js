@@ -12,7 +12,7 @@ const formStyle = {
   textAlign: "center",
 };
 
-const NewPart = ({
+const NewAccessory = ({
   modalState,
   onClose,
   onModalSubmit,
@@ -20,6 +20,7 @@ const NewPart = ({
   suppliers,
   carriers,
   devices,
+  types,
 }) => {
   const userID = user && user._id;
 
@@ -30,7 +31,8 @@ const NewPart = ({
     tracking: "",
     carrier: "",
     supplier: "",
-    part: "",
+    type: "",
+    accessory: "",
     device: "",
     model: "",
     quantity: "0",
@@ -51,7 +53,7 @@ const NewPart = ({
     // carrier,
     // supplier,
     // device,
-    part,
+    accessory,
     model,
     quantity,
     cost,
@@ -81,7 +83,8 @@ const NewPart = ({
       tracking: "",
       carrier: "",
       supplier: "",
-      part: "",
+      type: "",
+      accessory: "",
       device: "",
       model: "",
       quantity: "0",
@@ -152,7 +155,7 @@ const NewPart = ({
           Close
         </button>
         {/* Content here */}
-        <h1 style={formStyle}>New Part</h1>
+        <h1 style={formStyle}>New Accessory</h1>
         <div className="myForm">
           <form onSubmit={(e) => onSubmit(e)}>
             <div className="formSection groupShipping">
@@ -195,9 +198,6 @@ const NewPart = ({
                   callback={(name, value) => selectCallback(name, value)}
                 />
               </div>
-            </div>
-            <div className="formSection groupPart">
-              <div className="sectionTitle">Part</div>
               <div className="form-group">
                 <label htmlFor="supplier">Supplier</label>
                 <Select
@@ -206,26 +206,30 @@ const NewPart = ({
                   callback={(name, value) => selectCallback(name, value)}
                 />
               </div>
+            </div>
+            <div className="formSection groupPart">
+              <div className="sectionTitle">Accessory</div>
+
               <div className="form-group">
-                <label htmlFor="part">Part</label>
+                <label htmlFor="accessory">Accessory</label>
                 <input
                   type="text"
-                  name="part"
-                  id="part"
+                  name="accessory"
+                  id="accessory"
                   onChange={(e) => onChane(e)}
-                  value={part}
+                  value={accessory}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="type">Type</label>
+                <Select
+                  name="type"
+                  datas={types && types}
+                  callback={(name, value) => selectCallback(name, value)}
                 />
               </div>
               <div className="form-group">
                 <label htmlFor="device">Device</label>
-                {/* <input
-                  type="text"
-                  name="device"
-                  id="device"
-                  onChange={(e) => onChane(e)}
-                  value={device}
-                /> */}
-
                 <Select
                   name="device"
                   datas={devices && devices}
@@ -373,4 +377,4 @@ const NewPart = ({
   );
 };
 
-export default NewPart;
+export default NewAccessory;

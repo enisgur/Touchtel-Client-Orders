@@ -70,6 +70,7 @@
 }
 
 .template .main nav {
+    position: relative;
     width: 100%;
     background-color: #343A40;
     height: 60px;
@@ -78,6 +79,7 @@
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
+    transition: 0.4s;
 }
 
 .template .main nav ul {

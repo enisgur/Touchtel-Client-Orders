@@ -32,7 +32,7 @@ export const searchFunc = async (st, parts, states) => {
           date: p.date ? p.date.split("T")[0] : "",
           estimate: p.shipping.edate ? p.shipping.edate.split("T")[0] : "",
           from: p.detail.supplier.company ? p.detail.supplier.company : "",
-          device: p.detail.device ? p.detail.device : "",
+          device: p.detail.device.name ? p.detail.device.name : "",
           model: p.detail.model ? p.detail.model : "",
           part: p.detail.part ? p.detail.part : "",
           customer: p.customer.name ? p.customer.name : "",
@@ -91,7 +91,7 @@ export const getPartsbyDate = async (year, month, states, actions) => {
           date: p.date ? p.date.split("T")[0] : "",
           estimate: p.shipping.edate ? p.shipping.edate.split("T")[0] : "",
           from: p.detail.supplier.company ? p.detail.supplier.company : "",
-          device: p.detail.device ? p.detail.device : "",
+          device: p.detail.device.name ? p.detail.device.name : "",
           model: p.detail.model ? p.detail.model : "",
           part: p.detail.part ? p.detail.part : "",
           customer: p.customer.name ? p.customer.name : "",
@@ -106,6 +106,119 @@ export const getPartsbyDate = async (year, month, states, actions) => {
 
     // console.log("done");
     setComponentLoading(false);
+  }
+};
+
+// FOR ACCESSORIES
+
+export const getAccessoriesbyDate = async (year, month, states, actions) => {
+  const { setComponentLoading, setDataAccessories } = states;
+
+  const { getAccessoriesbyMonth } = actions;
+
+  if (year && month) {
+    // console.log("start");
+    setComponentLoading(true);
+    setDataAccessories([]);
+
+    // const res = await getParts();
+    const res = await getAccessoriesbyMonth(year, month);
+
+    if (res) {
+      await res.map((p) => {
+        // let newObj = {
+        //   ...p.shipping,
+        //   ...p.detail,
+        //   ...p.finance,
+        //   ...p.customer,
+        //   ...p.user,
+        //   isStore: p.isStore,
+        // };
+
+        let newObj = {
+          id: p._id,
+          status: p.status
+            ? p.status === "0"
+              ? "Ordered"
+              : p.status === "1"
+              ? "Shipped"
+              : p.status === "2" && "Done"
+            : "",
+          date: p.date ? p.date.split("T")[0] : "",
+          estimate: p.shipping.edate ? p.shipping.edate.split("T")[0] : "",
+          from: p.detail.supplier.company ? p.detail.supplier.company : "",
+          device: p.detail.device.name ? p.detail.device.name : "",
+          model: p.detail.model ? p.detail.model : "",
+          accessory: p.detail.accessory ? p.detail.accessory : "",
+          customer: p.customer.name ? p.customer.name : "",
+          phone: p.customer.phone ? p.customer.phone : "",
+        };
+
+        setDataAccessories((f) => [...f, newObj]);
+        // console.log(newObj);
+        return newObj;
+      });
+    }
+
+    // console.log("done");
+    setComponentLoading(false);
+  }
+};
+
+export const searchFuncAccessory = async (st, accessories, states) => {
+  const {
+    setComponentLoading,
+    setFilterStatusData,
+    setIsStatusFiltered,
+  } = states;
+
+  setComponentLoading(true);
+  setFilterStatusData([]);
+
+  let stat = 0;
+
+  if (st !== "0") {
+    stat = st - 1;
+    const accessory = await accessories.filter((p) => {
+      return p.status === String(stat);
+    });
+
+    if (accessory) {
+      setFilterStatusData([]);
+
+      await accessory.map((p) => {
+        let newObj = {
+          id: p._id ? p._id : "",
+          status: p.status
+            ? p.status === "0"
+              ? "Ordered"
+              : p.status === "1"
+              ? "Shipped"
+              : p.status === "2" && "Done"
+            : "",
+          date: p.date ? p.date.split("T")[0] : "",
+          estimate: p.shipping.edate ? p.shipping.edate.split("T")[0] : "",
+          from: p.detail.supplier.company ? p.detail.supplier.company : "",
+          device: p.detail.device.name ? p.detail.device.name : "",
+          model: p.detail.model ? p.detail.model : "",
+          accessory: p.detail.accessory ? p.detail.accessory : "",
+          customer: p.customer.name ? p.customer.name : "",
+          phone: p.customer.phone ? p.customer.phone : "",
+        };
+
+        return setFilterStatusData((f) => [...f, newObj]);
+      });
+      setIsStatusFiltered(true);
+    }
+
+    setComponentLoading(false);
+  } else {
+    await setComponentLoading(true);
+    await setFilterStatusData([]);
+    await setIsStatusFiltered(false);
+    await setComponentLoading(false);
+
+    // console.log("asdasd ", dataaccessories);
   }
 };
 

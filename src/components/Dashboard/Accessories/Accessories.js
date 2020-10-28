@@ -5,40 +5,45 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 // Actions
-import { deletePart, postPart, getPartsbyMonth } from "../../../actions/part";
+import {
+  deleteAccessory,
+  postAccessory,
+  getAccessoriesbyMonth,
+} from "../../../actions/accessory";
 import { getSuppliers } from "../../../actions/supplier";
 import { getCarriers } from "../../../actions/carrier";
 import { getDevices } from "../../../actions/device";
-
-// import { loadUser } from "../../../actions/auth";
+import { getTypes } from "../../../actions/type";
 
 // css
 import "../../../style/part.css";
 
 // Components
-import NewPart from "./NewPart/NewPart";
+import NewAccessory from "./NewAccessory/NewAccessory";
 import DetailModal from "./Detail/DetailModal";
 import Table from "../../Table/Table";
 
 // Utils Functions
-import { searchFunc, getPartsbyDate } from "./../../utils/tableFuncs";
-// import carriers from "../../../reducers/carriers";
+import {
+  searchFuncAccessory,
+  getAccessoriesbyDate,
+} from "./../../utils/tableFuncs";
 
-const Parts = ({
+const Accessories = ({
   isAuth,
   user,
-  parts,
-  postPart,
-  deletePart,
-  // getParts,
-  getPartsbyMonth,
+  accessories,
+  postAccessory,
+  deleteAccessory,
+  getAccessoriesbyMonth,
   getSuppliers,
   suppliers,
   getDevices,
   devices,
   getCarriers,
   carriers,
-  // loadUser,
+  getTypes,
+  types,
 }) => {
   const history = useHistory();
 
@@ -55,13 +60,11 @@ const Parts = ({
     // eslint-disable-next-line
   }, [isAuth]);
 
-  // const [isMounted, setIsMounted] = useState(false);
-
   const [isModal, setIsModal] = useState(false);
-  const [dataParts, setDataParts] = useState([]);
+  const [dataAccessories, setDataAccessories] = useState([]);
   const [componentLoading, setComponentLoading] = useState(true);
 
-  // Parts Detail Modal
+  // Accessories Detail Modal
   const [isDetailModal, setIsDetailModal] = useState(false);
   const [clickedTable, setClickedTable] = useState("");
 
@@ -97,22 +100,21 @@ const Parts = ({
     getCarriers();
     getSuppliers();
     getDevices();
+    getTypes();
     setDate();
     // eslint-disable-next-line
   }, []);
-
-  // GETPARTSBYDATE WAS HERE <-----------------------
 
   useEffect(() => {
     if (year && month) {
       setStatus(0);
       setIsStatusFiltered(false);
       setFilterStatusData([]);
-      getPartsbyDate(
+      getAccessoriesbyDate(
         year,
         month,
-        { setComponentLoading, setDataParts },
-        { getPartsbyMonth }
+        { setComponentLoading, setDataAccessories },
+        { getAccessoriesbyMonth }
       );
     }
 
@@ -124,7 +126,7 @@ const Parts = ({
       // when status change filter parts by selected Status
       // change dataParts setDataParts  State !
       const initEffect = async () => {
-        await searchFunc(status, parts, {
+        await searchFuncAccessory(status, accessories, {
           setComponentLoading,
           setFilterStatusData,
           setIsStatusFiltered,
@@ -150,39 +152,39 @@ const Parts = ({
 
   const onModalSubmit = async (formdata) => {
     // console.log("modalSubmited !!", formdata);
-    await postPart(formdata);
+    await postAccessory(formdata);
     // await getPartsbyDate(year, month);
-    getPartsbyDate(
+    getAccessoriesbyDate(
       year,
       month,
-      { setComponentLoading, setDataParts },
-      { getPartsbyMonth }
+      { setComponentLoading, setDataAccessories },
+      { getAccessoriesbyMonth }
     );
   };
 
   const onModalDelete = async (mId) => {
-    await deletePart(mId);
+    await deleteAccessory(mId);
 
-    getPartsbyDate(
+    getAccessoriesbyDate(
       year,
       month,
-      { setComponentLoading, setDataParts },
-      { getPartsbyMonth }
+      { setComponentLoading, setDataAccessories },
+      { getAccessoriesbyMonth }
     );
   };
 
   const callBackTable = (tableid) => {
-    async function filterPart(tableid) {
-      const part = await parts.filter(function (part) {
-        return part._id === tableid;
+    async function filterAccessory(tableid) {
+      const accessory = await accessories.filter(function (accesso) {
+        return accesso._id === tableid;
       });
 
       // console.log(part);
-      setClickedTable(part);
+      setClickedTable(accessory);
     }
 
     if (tableid) {
-      filterPart(tableid);
+      filterAccessory(tableid);
 
       toggleDetailModal();
     }
@@ -201,14 +203,16 @@ const Parts = ({
       setStatus(e.target.value);
     }
   };
+
   return (
     <div className="parts-main">
       {isModal && (
-        <NewPart
+        <NewAccessory
           user={user}
           suppliers={suppliers && suppliers.suppliers}
           carriers={carriers && carriers.carriers}
           devices={devices && devices.devices}
+          types={types && types.types}
           modalState={isModal}
           onClose={() => setIsModal(false)}
           onModalSubmit={(formdata) => onModalSubmit(formdata)}
@@ -221,6 +225,7 @@ const Parts = ({
           suppliers={suppliers && suppliers.suppliers}
           carriers={carriers && carriers.carriers}
           devices={devices && devices.devices}
+          types={types && types.types}
           modalState={isDetailModal}
           onClose={() => setIsDetailModal(false)}
           onModalSubmit={(formdata) => onModalSubmit(formdata)}
@@ -229,8 +234,8 @@ const Parts = ({
       )}
 
       <div className="title">
-        <h2>Parts</h2>
-        <span>Find all customer or store Parts orders</span>
+        <h2>Accessories</h2>
+        <span>Find all customer or store Accessory orders</span>
       </div>
 
       <div className="actions">
@@ -292,9 +297,9 @@ const Parts = ({
         </div>
       </div>
 
-      {componentLoading === false && dataParts.length > 0 ? (
+      {componentLoading === false && dataAccessories.length > 0 ? (
         <Table
-          d={isStatusFiltered ? filterStatusData : dataParts}
+          d={isStatusFiltered ? filterStatusData : dataAccessories}
           callBackTable={(tableID) => callBackTable(tableID)}
         />
       ) : componentLoading ? (
@@ -306,14 +311,14 @@ const Parts = ({
   );
 };
 
-Parts.propTypes = {
+Accessories.propTypes = {
   // loadUser: PropTypes.func.isRequired,
   // getParts: PropTypes.func.isRequired,
-  getPartsbyMonth: PropTypes.func.isRequired,
-  postPart: PropTypes.func.isRequired,
-  deletePart: PropTypes.func.isRequired,
+  getAccessoriesbyMonth: PropTypes.func.isRequired,
+  postAccessory: PropTypes.func.isRequired,
+  deleteAccessory: PropTypes.func.isRequired,
   user: PropTypes.object,
-  parts: PropTypes.array,
+  accessories: PropTypes.array,
   isAuth: PropTypes.bool,
   getSuppliers: PropTypes.func.isRequired,
   getCarriers: PropTypes.func.isRequired,
@@ -322,22 +327,20 @@ Parts.propTypes = {
 
 const mapStateToProps = (state) => ({
   user: state.auth.user,
-  parts: state.part.parts,
+  accessories: state.accessories.accessories,
   isAuth: state.auth.isAuthenticated,
   suppliers: state.suppliers,
   carriers: state.carriers,
   devices: state.devices,
+  types: state.types,
 });
 
 export default connect(mapStateToProps, {
-  postPart,
-  deletePart,
   getSuppliers,
   getCarriers,
   getDevices,
-  // getParts,
-  getPartsbyMonth,
-  // loadUser,
-})(Parts);
-
-// https://www.youtube.com/watch?v=LyLa7dU5tp8&ab_channel=WebDevSimplified
+  getTypes,
+  postAccessory,
+  getAccessoriesbyMonth,
+  deleteAccessory,
+})(Accessories);

@@ -7,6 +7,7 @@ import Login from "./components/Auth/Login/Login";
 import Register from "./components/Auth/Register/Register";
 
 import Parts from "./components/Dashboard/Parts/Parts";
+import Accessories from "./components/Dashboard/Accessories/Accessories";
 
 // Redux
 import { Provider } from "react-redux";
@@ -32,6 +33,15 @@ const App = () => {
               render={() => (
                 <Dashboard>
                   <Parts />
+                </Dashboard>
+              )}
+            />
+            <Route
+              exact
+              path="/dashboard/accessories"
+              render={() => (
+                <Dashboard>
+                  <Accessories />
                 </Dashboard>
               )}
             />

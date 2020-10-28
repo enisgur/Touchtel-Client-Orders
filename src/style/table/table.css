@@ -58,3 +58,28 @@ table tbody .shipped {
 table tbody .ordered {
     background-color: tomato;
 } */
+
+
+@media screen and (max-width: 1020px) {
+    table td,
+    table th {
+        padding: 5px;
+        font-size: 15px;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    table td,
+    table th {
+        padding: 3px;
+        font-size: 10px;
+    }
+} 
+
+@media screen and (max-width: 480px) {
+    table td,
+    table th {
+        padding: 1px;
+        font-size: 5px;
+    }
+} 

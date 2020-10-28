@@ -1,3 +1,20 @@
+.groupCustomer {
+    grid-area: groupCustomer;
+
+}
+.groupFinance {
+    grid-area: groupFinance;
+
+}
+.groupPart {
+    grid-area: groupPart;
+
+}
+.groupShipping {
+    grid-area: groupShipping;
+}
+
+
 .myForm form .hide {
     display: none;
 }
@@ -12,7 +29,11 @@
     position: relative;
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(4, 20%);
+    /* grid-template-columns: repeat(4, 20%); */
+    grid-template: 
+    'groupShipping groupPart groupFinance groupCustomer'
+    'formNote formNote formNote formNote'
+    ;
     /* flex-direction: row; */
     /* align-items: center; */
     justify-content: space-evenly;
@@ -82,13 +103,42 @@
 }
 
 
+/* NOTE TEXAREA */
+
+.formSection-note {
+    grid-area: formNote;
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    padding: 20px;
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* justify-content: center; */
+    /* align-items: flex-start; */
+}
+.formSection-note .form-group {
+    position: relative;
+    width: 96%;
+    padding-bottom: 20px;
+}
+.formSection-note #note {
+    position: relative;
+    width: 100%;
+    padding: 12px;
+    /* height: 100px; */
+    /* background-color: red; */
+}
+
+/* NOTE TEXTAREA END */
+
+
 .myForm .buttons {
     width: 85%;
     margin: 0 auto;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    /* justify-content: space-evenly; */
+    justify-content: space-evenly;
 }
 
 .myForm .buttons button[type="submit"] {
@@ -111,10 +161,33 @@
 }
 
 
+/* delete Button */
+.myForm .buttons .btn-delete {
+    background-color: #ffcbcb;
+    border: 1px solid #f59191;
+    border-radius: 20px;
+    width: 100px;
+    height: 40px;
+    font-size: 18px;
+}
+.myForm .buttons .btn-delete:hover {
+    color: #645454;
+    background-color: #e4e4e4;
+}
+.myForm .buttons .btn-delete:active {
+    background-color: #fc3d3d;
+    width: 95px;
+}
+
 
 @media screen and (max-width: 1020px) {
     .myForm form {
-        grid-template-columns: repeat(2, 30%);
+        /* grid-template-columns: repeat(2, 30%); */
+        grid-template: 
+    'groupShipping groupPart'
+    'groupFinance groupCustomer'
+    'formNote formNote'
+    ;
     }
 
     .myForm .buttons {
@@ -124,7 +197,12 @@
 
 @media screen and (max-width: 640px) {
     .myForm form {
-        grid-template-columns: repeat(2, 40%);
+        /* grid-template-columns: repeat(2, 40%); */
+        grid-template: 
+        'groupShipping groupPart'
+        'groupFinance groupCustomer'
+        'formNote formNote'
+        ;
     }
 
     .myForm .buttons {
@@ -135,7 +213,14 @@
 
 @media screen and (max-width: 400px) {
     .myForm form {
-        grid-template-columns: 70%;
+        /* grid-template-columns: 70%; */
+        grid-template: 
+        'groupShipping'
+        'groupPart'
+        'groupFinance'
+        'groupCustomer'
+        'formNote'
+        ;
     }
 
     .myForm .buttons {

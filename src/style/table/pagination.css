@@ -82,3 +82,26 @@
 .pages .pagination-list li .is-current {
     background-color: #c7bfbf;
 }
+
+
+
+
+@media screen and (max-width: 480px) {
+    .next-prev a  {
+        width: 40px;
+        height: 20px;
+        font-size: 8px;
+        margin-right: 20px;
+    }
+    .pages .pagination-list li {
+        padding: 0 3px;
+    }
+    .pages .pagination-list li .pagination-link {
+        width: 15px;
+        height: 15px;
+        font-size: 8px;
+    }
+    .pages .pagination-list li .pagination-link:active {
+        width: 14px;
+    }
+} 

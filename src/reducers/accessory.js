@@ -1,29 +1,29 @@
-import { part } from "../actions/types";
+import { accessory } from "../actions/types";
 
 const initialState = {
   loading: true,
-  parts: null,
-  lastPart: null,
+  accessories: null,
+  lastAccessory: null,
 };
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case part.GET_ALL_PARTS:
-    case part.GET_PARTS_MONTH:
+    case accessory.GET_ALL_ACCESSORIES:
+    case accessory.GET_ACCESSORIES_MONTH:
       return {
         ...state,
         loading: false,
-        parts: payload,
+        accessories: payload,
       };
-    case part.POST_PART_SUCCESS:
+    case accessory.POST_ACCESSORY_SUCCESS:
       return {
         ...state,
         loading: false,
-        lastPart: payload,
+        lastAccessory: payload,
       };
-    case part.DELETE_PART_SUCCESS:
+    case accessory.DELETE_ACCESSORY_SUCCESS:
       return {
         ...state,
         loading: false,
